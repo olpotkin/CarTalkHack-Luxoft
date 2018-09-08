@@ -61,7 +61,7 @@ async function getRequest(param) {
 const LaunchHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
-    return request.type === 'LaunchRequest' || (request.type === 'IntentRequest' && request.intent.name === 'AboutIntent');
+    return request.type === 'LaunchRequest';
   },
 
   async handle(handlerInput) {
@@ -186,8 +186,8 @@ const ErrorHandler = {
   },
 };
 
-const SHOW_GAS_STATION = 'Do you want me to look up the closest gas station?'
-const BUILD_IT = 'Go build that part your self...'
+const SHOW_GAS_STATION = 'Do you want me to look up the closest gas station?';
+const BUILD_IT = 'Go build that part your self...';
 const SKILL_NAME = 'Car Talk';
 const GET_SKILL_STATUS = 'Car Talk is ';
 const YOUR_INTENT_IS = 'Your intent is ';
