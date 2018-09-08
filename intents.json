@@ -1,0 +1,58 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "car talk",
+            "intents": [
+                {
+                    "name": "FuelIntent",
+                    "slots": [],
+                    "samples": [
+                        "fuel level",
+                        "fuel"
+                    ]
+                },
+                {
+                    "name": "LaunchRequest",
+                    "slots": [],
+                    "samples": [
+                        "launch command"
+                    ]
+                },
+                {
+                    "name": "IntentRequest",
+                    "slots": [],
+                    "samples": [
+                        "go out",
+                        "go outside",
+                        "lets go out"
+                    ]
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+}
