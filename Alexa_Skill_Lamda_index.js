@@ -37,6 +37,16 @@ async function getRequest(param) {
           console.log("Fuel Level: " + fuelLevel);
           resolve(fuelLevel);
         }
+        else if (param == 'isCarAvailable') {
+          const isCarAvailable = carData.carStatus.location.available;
+          console.log("Car Available: " + isCarAvailable);
+          resolve(isCarAvailable);
+        }
+        else if (param == 'getErrorList') {
+          const errorList = carData.carStatus.errors;
+          console.log("Errors: " + errorList);
+          resolve(errorList);
+        }
         else {
           resolve(carData.carStatus);
         }
@@ -97,6 +107,7 @@ const IntentHandler = {
 
     let message;
 
+//---
     if (request.intent.name === 'FuelIntent') {
       try {
         let fuelLevel = await getRequest('fuelLevel');
@@ -109,6 +120,34 @@ const IntentHandler = {
         message = 'error getting fuel level';
       }
     }
+//---
+    else if (request.intent.name === 'TakeMeHomeIntent')
+    {
+      try {
+        let isCarAvailable = await getRequest('isCarAvailable');
+        if (isCarAvailable) {
+        	message = 'Car is available';
+        } else {
+        	message = 'Car is busy now. Do you mind to use Uber?';
+        }
+      }
+      catch (err) {
+        message = 'error getting parameters';
+      }
+    }
+//---
+    else if (request.intent.name === 'ShowErrorsIntent')
+    {
+      try {
+        let errorList = await getRequest('getErrorList');
+        message = "You have " + errorList.length + " errors";
+      }
+      catch (err) {
+        message = 'error getting parameters';
+      }
+    }
+
+//---
     else {
       message = request.intent.name;
     }

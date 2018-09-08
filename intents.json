@@ -7,24 +7,9 @@
                     "name": "FuelIntent",
                     "slots": [],
                     "samples": [
+                        "fuel",
                         "fuel level",
-                        "fuel"
-                    ]
-                },
-                {
-                    "name": "LaunchRequest",
-                    "slots": [],
-                    "samples": [
-                        "launch command"
-                    ]
-                },
-                {
-                    "name": "IntentRequest",
-                    "slots": [],
-                    "samples": [
-                        "go out",
-                        "go outside",
-                        "lets go out"
+                        "fuel tank"
                     ]
                 },
                 {
@@ -50,6 +35,20 @@
                 {
                     "name": "AMAZON.FallbackIntent",
                     "samples": []
+                },
+                {
+                    "name": "TakeMeHomeIntent",
+                    "slots": [],
+                    "samples": [
+                        "take me home"
+                    ]
+                },
+                {
+                    "name": "ShowErrorsIntent",
+                    "slots": [],
+                    "samples": [
+                        "check errors"
+                    ]
                 }
             ],
             "types": []
