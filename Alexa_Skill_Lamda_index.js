@@ -14,6 +14,8 @@ const options = {
   method: "GET"
 };
 
+var stateShopping = false;
+var stateGas = false;
 
 async function getRequest(param) {
 
@@ -112,6 +114,7 @@ const IntentHandler = {
       try {
         let fuelLevel = await getRequest('fuelLevel');
         message = YOUR_FUEL_LEVEL_IS + fuelLevel + '%' + FULLSTOP;
+        fuelLevel = 9;
         if (fuelLevel <= 10) {
           fuelLow = true;
         }
@@ -121,14 +124,74 @@ const IntentHandler = {
       }
     }
 //---
+
     else if (request.intent.name === 'TakeMeHomeIntent')
     {
       try {
+      	let inProgress = true;
+
+
         let isCarAvailable = await getRequest('isCarAvailable');
+        isCarAvailable = true;
+
         if (isCarAvailable) {
-        	message = 'Car is available';
+        	message = 'Car is available. ';
         } else {
         	message = 'Car is busy now. Do you mind to use Uber?';
+        	inProgress = false;
+        }
+
+        if (inProgress) {
+        	let fuelLevel = await getRequest('fuelLevel');
+        	fuelLevel = getRandomArbitrary(10, 11);
+        	message += YOUR_FUEL_LEVEL_IS + fuelLevel + '%. ';
+        	if (fuelLevel <= 10) {
+          		message += SPACE + SHOW_GAS_STATION;
+          		stateGas = true;
+          		inProgress = false;
+        	} else {
+        		message += " We are going home. Enjoy you ride. "
+        	}
+        }
+
+      }
+      catch (err) {
+        message = 'error getting parameters';
+      }
+    }
+//---
+
+
+    else if (request.intent.name === 'GoForShoppingIntent')
+    {
+      try {
+        message = "There are " + SHOPPING_LIST.length + " elements in your shopping list: ";
+
+        for (var i in SHOPPING_LIST) {
+        	message += SHOPPING_LIST[i] + ", "
+        }
+        stateShopping = true;
+        message += ". Do you want me to find nearest supermarket?";
+
+      }
+      catch (err) {
+        message = 'error getting parameters';
+      }
+    }
+
+//---
+    else if (request.intent.name === 'AMAZON.YesIntent')
+    {
+      try {
+        if (stateShopping) {
+        	let shop_id = getRandomArbitrary(0, SHOPPING_LIST.length);
+
+        	message = "I found " + MARKET_LIST[shop_id] + " nearby here. Route updated.";
+        	stateShopping = false;
+        }
+        else if (stateGas){
+        	message = "We are going to the Shell gas station. I will help you to push the car in the worst case.";
+        	stateGas = false;
         }
       }
       catch (err) {
@@ -136,17 +199,18 @@ const IntentHandler = {
       }
     }
 //---
+
     else if (request.intent.name === 'ShowErrorsIntent')
     {
       try {
         let errorList = await getRequest('getErrorList');
-        message = "You have " + errorList.length + " errors";
+        let errIndex = getRandomArbitrary(0, errorList.length);
+        message = "You have error with index number " + errIndex;
       }
       catch (err) {
         message = 'error getting parameters';
       }
     }
-
 //---
     else {
       message = request.intent.name;
@@ -224,6 +288,18 @@ const ErrorHandler = {
       .getResponse();
   },
 };
+
+/**
+ * Returns a random number between min (inclusive) and max (exclusive)
+ */
+function getRandomArbitrary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+
+const SHOPPING_LIST = ['apples', 'water', 'newspaper'];
+const MARKET_LIST = ['Edeka', 'Aldi', 'Rewe'];
+
 
 const SHOW_GAS_STATION = 'Do you want me to look up the closest gas station?';
 const BUILD_IT = 'Go build that part your self...';
