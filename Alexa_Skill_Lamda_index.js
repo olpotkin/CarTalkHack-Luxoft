@@ -125,11 +125,9 @@ const IntentHandler = {
     }
 //---
 
-    else if (request.intent.name === 'TakeMeHomeIntent')
-    {
+    else if (request.intent.name === 'TakeMeHomeIntent') {
       try {
       	let inProgress = true;
-
 
         let isCarAvailable = await getRequest('isCarAvailable');
         isCarAvailable = true;
@@ -161,9 +159,7 @@ const IntentHandler = {
     }
 //---
 
-
-    else if (request.intent.name === 'GoForShoppingIntent')
-    {
+    else if (request.intent.name === 'GoForShoppingIntent') {
       try {
         message = "There are " + SHOPPING_LIST.length + " elements in your shopping list: ";
 
@@ -172,7 +168,6 @@ const IntentHandler = {
         }
         stateShopping = true;
         message += ". Do you want me to find nearest supermarket?";
-
       }
       catch (err) {
         message = 'error getting parameters';
@@ -180,8 +175,7 @@ const IntentHandler = {
     }
 
 //---
-    else if (request.intent.name === 'AMAZON.YesIntent')
-    {
+    else if (request.intent.name === 'AMAZON.YesIntent') {
       try {
         if (stateShopping) {
         	let shop_id = getRandomArbitrary(0, SHOPPING_LIST.length);
@@ -200,8 +194,7 @@ const IntentHandler = {
     }
 //---
 
-    else if (request.intent.name === 'ShowErrorsIntent')
-    {
+    else if (request.intent.name === 'ShowErrorsIntent') {
       try {
         let errorList = await getRequest('getErrorList');
         let errIndex = getRandomArbitrary(0, errorList.length);
@@ -219,12 +212,11 @@ const IntentHandler = {
     const textOutput = message;
     const speechOutput = message;
     if (fuelLow) {
-
       return handlerInput.responseBuilder
         .speak(speechOutput + SPACE + SHOW_GAS_STATION)
         .reprompt(SHOW_GAS_STATION)
         .withSimpleCard(SKILL_NAME, textOutput)
-    //    .addDelegateDirective(request.intent)
+//      .addDelegateDirective(request.intent)
         .getResponse();
     }
     return handlerInput.responseBuilder
@@ -289,38 +281,35 @@ const ErrorHandler = {
   },
 };
 
-/**
- * Returns a random number between min (inclusive) and max (exclusive)
- */
+///
+/// Returns a random number between min (inclusive) and max (exclusive)
+///
 function getRandomArbitrary(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
-
 const SHOPPING_LIST = ['apples', 'water', 'newspaper'];
-const MARKET_LIST = ['Edeka', 'Aldi', 'Rewe'];
+const MARKET_LIST   = ['Edeka', 'Aldi', 'Rewe'];
 
-
-const SHOW_GAS_STATION = 'Do you want me to look up the closest gas station?';
-const BUILD_IT = 'Go build that part your self...';
-const SKILL_NAME = 'Car Talk';
-const GET_SKILL_STATUS = 'Car Talk is ';
-const YOUR_INTENT_IS = 'Your intent is ';
+const SHOW_GAS_STATION   = 'Do you want me to look up the closest gas station?';
+const BUILD_IT           = 'Go build that part your self...';
+const SKILL_NAME         = 'Car Talk';
+const GET_SKILL_STATUS   = 'Car Talk is ';
+const YOUR_INTENT_IS     = 'Your intent is ';
 const YOUR_FUEL_LEVEL_IS = 'Your fuel level is ';
-const YOUR_MILEAGE_IS = 'Your mileage is ';
-const YOUR_CAR_HAS = 'Your car has ';
-const ERRORS = 'errors';
-const SMILE = ':)';
-const FROWN = ':(';
-const SPACE = ' ';
-const FULLSTOP = '.';
+const YOUR_MILEAGE_IS    = 'Your mileage is ';
+const YOUR_CAR_HAS       = 'Your car has ';
+const ERRORS             = 'errors';
+const SMILE              = ':)';
+const FROWN              = ':(';
+const SPACE              = ' ';
+const FULLSTOP           = '.';
 
 
 const GET_FACT_MESSAGE = 'Here\'s your fact: ';
-const HELP_MESSAGE = 'You can say tell me about my car, or, how much fuel do I have left, or, you can say exit... What can I help you with?';
-const HELP_REPROMPT = 'What can I help you with?';
-const STOP_MESSAGE = 'Goodbye!';
-
+const HELP_MESSAGE     = 'You can say tell me about my car, or, how much fuel do I have left, or, you can say exit... What can I help you with?';
+const HELP_REPROMPT    = 'What can I help you with?';
+const STOP_MESSAGE     = 'Goodbye!';
 
 const skillBuilder = Alexa.SkillBuilders.standard();
 
